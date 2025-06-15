@@ -1,0 +1,39 @@
+In package.json
+"type": "commonjs" include module.exports = variable_name / const 
+"type": "module" include export default variable_name / import {variable_name} from './file_name'
+
+//server.js
+import { add, sub } from "./math.js";
+
+console.log(add(22, 11));
+console.log(sub(22, 11));
+
+//math.js
+
+export const add = (a, b) => a + b;
+export const sub = (a, b) => a - b;
+
+// export default add; //this is when type is module
+
+
+
+
+
+//SERVER SETUP
+In command prompt
+- npm i express
+- npm i @types/express //to import express 
+
+In package.json change scripts with following
+
+  "scripts": {
+    "dev": "node ./src/server.js", //allow npm run build
+    "build": "tsc"  //convert typescript into js file
+  },
+
+
+and in terminal
+-  npm run build
+and it throws :-
+> mernproject@1.0.0 build
+> tsc
