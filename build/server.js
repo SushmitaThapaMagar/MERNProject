@@ -1,16 +1,11 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const app = (0, express_1.default)();
+import express from "express";
+const app = express();
 const PORT = 8000;
 app.get("/", (req, res) => {
-    res.status(200).json({
-        message: "Server is up and running",
-    });
+  res.status(200).json({
+    message: "Server is up and running",
+  });
 });
 app.listen(PORT, () => {
-    console.log(`Server is sunning at http://localhost:${PORT}`);
+  console.log(`Server is sunning at http://localhost:${PORT}`);
 });

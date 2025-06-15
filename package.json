@@ -2,9 +2,9 @@
   "name": "mernproject",
   "version": "1.0.0",
   "main": "math.js",
-  "type": "module",
   "scripts": {
-    "dev": "node ./src/server.js",
+    "dev": "ts-node-dev ./src/server.ts",
+    "start": "node ./build/server.js",
     "build": "tsc"
   },
   "keywords": [],
@@ -12,7 +12,11 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@types/express": "^5.0.3",
+    "dotenv": "^16.5.0",
     "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "ts-node-dev": "^2.0.0"
   }
 }
