@@ -50,3 +50,8 @@ and it throws :-
 after that use : create .env file in root
 7. - npm i dotenv
 8. - npm i --save-dev @types/express ts-node-dev
+
+
+Next 
+= i mongoose
+- mongosh
