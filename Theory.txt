@@ -55,3 +55,7 @@ after that use : create .env file in root
 Next 
 = i mongoose
 - mongosh
+
+
+//if only is export then we use export default 
+// if more than one needs to be export then we use export const

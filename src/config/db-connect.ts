@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 export const connectDb = (uri: string) => {
   mongoose
-    .connect(uri)
+    .connect(uri) //promise
     .then(() => {
       console.log("database connected");
     })
