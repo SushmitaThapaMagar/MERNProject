@@ -13,6 +13,11 @@ const DB_URI = process.env.DB_URI ?? "";
 //connecing database
 connectDb(DB_URI);
 
+//using middlewares
+//extended : true is used for object is the obj is nested
+app.use(express.urlencoded({ extended: true })); //this let you recover the undefined when we post api
+app.use(express.json());
+
 app.get("/", (req, res) => {
   res.status(200).json({
     message: "Server is up and running",

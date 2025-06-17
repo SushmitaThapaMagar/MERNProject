@@ -59,3 +59,14 @@ Next
 
 //if only is export then we use export default 
 // if more than one needs to be export then we use export const
+
+
+// for hash for password
+- npm install bcrypt
+
+//CustomError 
+- async and await wala garne re
+
+
+
+
