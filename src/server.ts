@@ -2,9 +2,12 @@
 
 import "dotenv/config";
 
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import { connectDb } from "./config/db-connect";
 import authRoutes from "./routes/auth.route";
+import CustomError, {
+  errorHandler,
+} from "./middlewares/error-handler.middleware";
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -26,7 +29,14 @@ app.get("/", (req, res) => {
 
 //using routes
 app.use("/api/auth", authRoutes);
+app.all("/{*spalt}", (req: Request, res: Response, next: NextFunction) => {
+  const message = `Can not ${req.method} on ${req.url}`;
+  const error = new CustomError(message, 404);
+  next(error);
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });
+
+app.use(errorHandler);

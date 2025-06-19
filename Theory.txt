@@ -69,4 +69,13 @@ Next
 
 
 
+ -respawn = restarts the application when files change.
+--transpile-only = Skips type checking and only compiles TypeScript to JavaScript
 
+//terminal
+- npm i jsonwebtoken
+- npm i -D @types/jsonwebtoken 
+
+//Token 
+1 jwt.sign :  receive payload and privatekey, algorithm - by default HS256
+2 expiresIn :  
