@@ -76,15 +76,15 @@ export const update = asyncHandler(async (req: Request, res: Response) => {
 //delete categories
 export const remove = asyncHandler(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const updatedcategory = await Category.findByIdAndDelete(id, { new: true });
+  const deletecategory = await Category.findByIdAndDelete(id, { new: true });
 
-  if (!updatedcategory) {
+  if (!deletecategory) {
     throw new CustomError("Deleted Category Not Found", 400);
   }
   res.status(200).json({
     message: "Category deleted successfully!",
     success: true,
     status: "success",
-    data: updatedcategory,
+    data: null,
   });
 });
