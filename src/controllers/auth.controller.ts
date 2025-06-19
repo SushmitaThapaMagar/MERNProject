@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction, response } from "express";
-import User from "../modules/user.model";
+import User from "../models/user.model";
 import { compare, hash } from "../utils/bcrypt";
 import CustomError from "../middlewares/error-handler.middleware";
 import { asyncHandler } from "../utils/async-handler.utils";
