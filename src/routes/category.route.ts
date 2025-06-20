@@ -6,13 +6,14 @@ import {
   remove,
   update,
 } from "../controllers/category.controller";
+import { authenticate } from "../middlewares/authenticate.middleware";
 
 const router = express.Router();
 
 // /category
 
 //category post route
-router.post("/", create);
+router.post("/", authenticate(), create);
 //get all categories
 router.get("/", getAll);
 //getbyId
