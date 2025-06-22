@@ -76,7 +76,7 @@ export const updateProducts = asyncHandler(
     const { name, price, description, stock, brand, isFeatured } = req.body;
     const updatedproduct = await Product.findByIdAndUpdate(
       id,
-      { name, description },
+      { name, price, description, stock, brand, isFeatured },
       { new: true }
     );
 
