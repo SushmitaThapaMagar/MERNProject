@@ -11,7 +11,7 @@ import CustomError, {
 } from "./middlewares/error-handler.middleware";
 
 import categoryRoutes from "./routes/category.route";
-
+import productRoutes from "./routes/product.route";
 const app = express();
 const PORT = process.env.PORT || 8000;
 const DB_URI = process.env.DB_URI ?? "";
@@ -37,6 +37,7 @@ app.get("/", (req, res) => {
 //using routes
 app.use("/api/auth", authRoutes);
 app.use("/api/category", categoryRoutes);
+app.use("/api/product", productRoutes);
 
 app.all("/{*spalt}", (req: Request, res: Response, next: NextFunction) => {
   const message = `Can not ${req.method} on ${req.url}`;
