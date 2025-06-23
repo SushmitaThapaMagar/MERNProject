@@ -19,7 +19,7 @@ class CustomError extends Error {
 }
 
 export const errorHandler = (
-  err: any,
+  err: any, 
   req: Request,
   res: Response,
   next: NextFunction

@@ -20,8 +20,8 @@ router.get("/", getAll);
 router.get("/:id", getById);
 
 //update
-router.put("/:id", update);
+router.put("/:id", authenticate(), update);
 
 //remove
-router.delete("/:id", remove);
+router.delete("/:id", authenticate(), remove);
 export default router;

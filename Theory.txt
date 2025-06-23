@@ -84,6 +84,116 @@ Next
 06/19/2025
 
 helmet : helmet refers to a feature or add-on for a helmet that enhances its functionality or comfort
-
-
 - npm i helmet
+
+
+06/20/2025
+
+-  npm i cookie-parser
+
+- authenticate() in route file
+- npm i -D @types/cookie-parser
+
+
+//In github we should not use .env and node_modules for security concern
+
+
+/node_modules
+/ .env
+
+
+
+//Authentication(-- like token) or Autthorization
+crud category
+crud product
+
+//ecommerce
+if someone asked about the authentication in backend (like how do you do ?) 
+
+//1. end-user (customer [USER]) 
+ -- can do -- getall category/products, add cart, add to wishlist, place order, review/rate product
+
+//2. admin-user (ADMIN) 
+ -- add, update, delete, product and category, order, payment
+
+//3. super admin (SUPER_ADMIN) -- those who have more authoriry in system 
+ -- can do -- add to products,update, delete product, category 
+ -- can add new admin, update/delete admin
+
+
+//example : 
+// middleware is the function or execution between request and response -- cycle --> execute (req,res,next)
+Interview check : common logic - middleware 
+
+//common logic in controller, what do you do ? -- authenticate should not be used in controllers but we can use for error checking
+-- we can use middleware for authentication 
+
+req -> server (...middlewares) ->app.user(..routes) -->controller (end)
+-- auth middleware 
+
+//example : create category ->post req.
+
+//user  -- login post request aaucha ani user authenticate cha ki chaina check garnu paryo nita
+ we use jwt -> token (cookie, res) for user authentication
+
+//In email, role, id -- we use token to check Authorization
+Restful API are stateless meaning? -- >
+means that each request from a client to the server must contain 
+all the information the server needs to fulfill that request
+
+//middleware
+// function(req,res,next)
+1. req->token, token -> user not logged in ->error send ->
+
+2. jwt.sign({email, role, id}, {expiresIn:'1d'}) -> generate token
+// expiresIn: Specifies how long the token is valid
+
+-- jwt.sign returns token generate
+jwt.sign() takes the following parameters:
+Payload: An object containing the claims or information you want to include in the token (e.g., user ID, roles).
+Secret or Private Key: A string used to sign the token, ensuring its integrity and authenticity. This could be a symmetric key (for HMAC algorithms) or a private key (for RSA algorithms).
+Options (optional): An object that may include settings such as:
+expiresIn: Specifies how long the token is valid.
+algorithm: Defines the algorithm used for signing (e.g., HS256, RS256).
+
+
+jwt.verify(token) -> {email, role, id, iat, exp} (seconds) 
+// iat : time at which the token was issued
+//exp :time at which the token was expired
+res.json()
+
+3. const user = User.find(id) ->
+!user ->res.end()
+4. exp<currentTime -> valid
+exp > currentTime -> inValid -> res.end()
+
+5.
+role -> USER () access denied
+ res.end() 
+ !ADMIN 0r SUPER_ADMIN
+role -> ADMIN , SUPER_ADMIN -> access
+next()
+
+
+
+authenticate middleware used in application or route level?
+-> used in route level
+// application
+app.use(middleware)
+
+//route level
+
+route.get(id) //not required
+route.get() //not required
+route.put()
+route.post()
+route.delete()
+
+Cookies :  login details, preferences, and tracking information while browsing a website 
+--token ar stored in Cookies
+
+
+
+
+
+
