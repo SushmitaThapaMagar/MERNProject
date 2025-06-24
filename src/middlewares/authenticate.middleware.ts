@@ -5,9 +5,10 @@ import CustomError from "./error-handler.middleware";
 import { decodeJWTToken } from "../utils/jwt.utils";
 import User from "../models/user.model";
 import { JWTPayloadDecoded } from "../types/global.types";
+import { Role } from "../types/global.types";
 
 //middleware export function named : authenticate
-export const authenticate = () => {
+export const authenticate = (roles?: Role[]) => {
   //defines asynchronous middleware function:
 
   //asynchronous use async/wait -- try/catch -- handler
@@ -54,6 +55,10 @@ export const authenticate = () => {
 
       console.log(token);
       //Catches any errors that occur in the try block and passes them to the next error handling middleware
+
+      if (roles && !roles.includes(user.role)) {
+        throw new CustomError("Forbidden. Access denied", 403);
+      }
     } catch (err) {
       next(err);
     }

@@ -7,21 +7,22 @@ import {
   update,
 } from "../controllers/category.controller";
 import { authenticate } from "../middlewares/authenticate.middleware";
+import { Role } from "../types/global.types";
 
 const router = express.Router();
 
 // /category
 
 //category post route
-router.post("/", authenticate(), create);
+router.post("/", authenticate([Role.ADMIN]), create);
 //get all categories
 router.get("/", getAll);
 //getbyId
-router.get("/:id", getById);
+router.get("/:id", authenticate(), getById);
 
 //update
-router.put("/:id", authenticate(), update);
+router.put("/:id", authenticate(), authenticate([Role.ADMIN]), update);
 
 //remove
-router.delete("/:id", authenticate(), remove);
+router.delete("/:id", authenticate(), authenticate([Role.ADMIN]), remove);
 export default router;
