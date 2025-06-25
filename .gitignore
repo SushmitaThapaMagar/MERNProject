@@ -1,3 +1,5 @@
 /node_modules
 /.env
 /builds
+
+//used to store the data is needed to be .env

@@ -57,7 +57,7 @@ export const getByIdProduct = asyncHandler(
     //get category bi given id
     const product = await Product.findById(id);
     if (!product) {
-      throw new CustomError("Category not found", 400);
+      throw new CustomError("Product not found", 400);
     }
     res.status(200).json({
       message: ` Product by id ${id} fetched`,
@@ -77,7 +77,7 @@ export const updateProducts = asyncHandler(
     const updatedproduct = await Product.findByIdAndUpdate(
       id,
       { name, price, description, stock, brand, isFeatured },
-      { new: true }
+      { new: true } //return the document as it was before the update
     );
 
     if (!updatedproduct) {
@@ -92,7 +92,7 @@ export const updateProducts = asyncHandler(
   }
 );
 
-//delete categories
+//delete products
 export const removeProduct = asyncHandler(
   async (req: Request, res: Response) => {
     const { id } = req.params;
