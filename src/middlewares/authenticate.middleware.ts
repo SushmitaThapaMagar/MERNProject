@@ -17,7 +17,7 @@ export const authenticate = (roles?: Role[]) => {
       const token = req.cookies.access_token;
       // const token  = req.headers['authorization']
       if (!token) {
-        throw new CustomError("Unauthorized. Access denied", 401);
+        throw new CustomError("Unauthorized(token). Access denied", 401);
       }
 
       // check validity of token
@@ -26,7 +26,7 @@ export const authenticate = (roles?: Role[]) => {
       //token retrieve / getting back
       //attempts to retrieve the JWT from cookies (specifically, access_token)
       if (!decodedData) {
-        throw new CustomError("Unauthorized. Access denied", 401);
+        throw new CustomError("Unauthorized(deocdedData). Access denied", 401);
       }
 
       //Looks for a user in the database whose email matches the decoded JWT data
@@ -34,7 +34,7 @@ export const authenticate = (roles?: Role[]) => {
 
       //throws an error indicating unauthorized access
       if (!user) {
-        throw new CustomError("Unauthorized. Access denied", 401);
+        throw new CustomError("Unauthorized(user). Access denied", 401);
       }
 
       //Checks if the token has expired by comparing the expiration time (exp) to the current time.

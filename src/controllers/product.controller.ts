@@ -12,11 +12,13 @@ import Product from "../models/product.model";
 //post products
 export const createProduct = asyncHandler(
   async (req: Request, res: Response) => {
-    const { name, price, description, stock, brand, isFeatured } = req.body;
+    const { name, price, description, category, stock, brand, isFeatured } =
+      req.body;
     const product = await Product.create({
       name,
       price,
       description,
+      category,
       stock,
       brand,
       isFeatured,
@@ -25,6 +27,7 @@ export const createProduct = asyncHandler(
       throw new CustomError("Something went wrong", 500);
     }
     res.status(201).json({
+      //201 success
       message: "Product Created.",
       success: true,
       status: "success",
@@ -57,7 +60,7 @@ export const getByIdProduct = asyncHandler(
     //get category bi given id
     const product = await Product.findById(id);
     if (!product) {
-      throw new CustomError("Product not found", 400);
+      throw new CustomError("Product not found", 404);
     }
     res.status(200).json({
       message: ` Product by id ${id} fetched`,
@@ -81,7 +84,7 @@ export const updateProducts = asyncHandler(
     );
 
     if (!updatedproduct) {
-      throw new CustomError("Updated Product Not Found", 400);
+      throw new CustomError("Updated Product Not Found", 404);
     }
     res.status(200).json({
       message: "Product updated successfully",
@@ -99,7 +102,7 @@ export const removeProduct = asyncHandler(
     const deleteproduct = await Product.findByIdAndDelete(id, { new: true });
 
     if (!deleteproduct) {
-      throw new CustomError("Deleted product Not Found", 400);
+      throw new CustomError("Deleted product Not Found", 404);
     }
     res.status(200).json({
       message: "Product deleted successfully!",
