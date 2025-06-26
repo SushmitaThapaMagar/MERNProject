@@ -197,3 +197,9 @@ Cookies :  login details, preferences, and tracking information while browsing a
 
 
 
+
+
+FOR multer
+
+- npm i multer
+- npm i --save-dev @types/multer

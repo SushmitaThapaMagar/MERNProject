@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/async-handler.utils";
 import { Request, Response } from "express";
 import CustomError from "../middlewares/error-handler.middleware";
 import Product from "../models/product.model";
+
 // name
 // price
 // description
@@ -12,17 +13,25 @@ import Product from "../models/product.model";
 //post products
 export const createProduct = asyncHandler(
   async (req: Request, res: Response) => {
-    const { name, price, description, category, stock, brand, isFeatured } =
-      req.body;
-    const product = await Product.create({
-      name,
-      price,
-      description,
-      category,
-      stock,
-      brand,
-      isFeatured,
-    });
+    const data = req.body;
+
+    const { coverImage, images } = req.files as {
+      coverImage: Express.Multer.File[];
+      images: Express.Multer.File[];
+    };
+
+    if (!coverImage || coverImage.length === 0) {
+      throw new CustomError("Cover image is Required", 404);
+    }
+
+    const product = new Product(data);
+
+    product.coverImage = {
+      path: coverImage[0].path,
+      public_id: coverImage[0].filename,
+    };
+    await product.save();
+
     if (!product) {
       throw new CustomError("Something went wrong", 500);
     }

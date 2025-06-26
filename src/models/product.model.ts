@@ -24,6 +24,24 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Stock is Required"],
     },
+    coverImage: {
+      path: {
+        type: String,
+        required: true,
+      },
+      public_id: {
+        type: String,
+        required: true,
+      },
+      images: {
+        path: {
+          type: String,
+        },
+        public_id: {
+          type: String,
+        },
+      },
+    },
     brand: {
       type: String,
       required: [true, "Brand is Required"],
