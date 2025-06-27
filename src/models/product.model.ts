@@ -33,7 +33,9 @@ const productSchema = new mongoose.Schema(
         type: String,
         required: true,
       },
-      images: {
+    },
+    images: [
+      {
         path: {
           type: String,
         },
@@ -41,7 +43,8 @@ const productSchema = new mongoose.Schema(
           type: String,
         },
       },
-    },
+    ],
+
     brand: {
       type: String,
       required: [true, "Brand is Required"],

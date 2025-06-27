@@ -194,12 +194,26 @@ Cookies :  login details, preferences, and tracking information while browsing a
 
 
 
-
-
-
-
-
 FOR multer
 
 - npm i multer
 - npm i --save-dev @types/multer
+
+
+
+06/27/2025
+- login in cloudinary
+- search npm clodinary 
+- aws s3 buket nodejs
+
+- and go to generat api key
+
+and then in terminal- npm i cloudinary
+
+
+MULTER =========
+used for uploading files in a Node.js application.
+
+CLOUDINARY MEANING ====== 27/6/2025
+//third party software that is used to host the file images or vedio
+// cloudinary is used to upload files including images,videos in the cloud 

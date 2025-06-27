@@ -2,7 +2,8 @@ import { asyncHandler } from "../utils/async-handler.utils";
 import { Request, Response } from "express";
 import CustomError from "../middlewares/error-handler.middleware";
 import Product from "../models/product.model";
-
+import path from "path";
+import Category from "../models/category.model";
 // name
 // price
 // description
@@ -13,7 +14,7 @@ import Product from "../models/product.model";
 //post products
 export const createProduct = asyncHandler(
   async (req: Request, res: Response) => {
-    const data = req.body;
+    const { category: categoryId, ...data } = req.body;
 
     const { coverImage, images } = req.files as {
       coverImage: Express.Multer.File[];
@@ -23,13 +24,33 @@ export const createProduct = asyncHandler(
     if (!coverImage || coverImage.length === 0) {
       throw new CustomError("Cover image is Required", 404);
     }
+    const category = await Category.findById(categoryId);
+    if (!category) {
+      throw new CustomError("Category is Required", 404);
+    }
 
     const product = new Product(data);
+    product.category = category._id;
 
+    //add product cover image
     product.coverImage = {
       path: coverImage[0].path,
       public_id: coverImage[0].filename,
     };
+
+    //add product images
+
+    if (images && images.length > 0) {
+      const imagePath: { path: string; public_id: string }[] = images.map(
+        (image) => ({
+          path: image.path,
+          public_id: image.filename,
+        })
+      );
+      // product.images = imagePath as any;
+      product.set("images", imagePath);
+    }
+
     await product.save();
 
     if (!product) {
