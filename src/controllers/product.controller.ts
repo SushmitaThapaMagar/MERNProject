@@ -4,6 +4,7 @@ import CustomError from "../middlewares/error-handler.middleware";
 import Product from "../models/product.model";
 import path from "path";
 import Category from "../models/category.model";
+import { removeImages } from "../cloudinary.config";
 // name
 // price
 // description
@@ -11,7 +12,7 @@ import Category from "../models/category.model";
 // brand
 // isFeatured
 
-//post products
+//post products  ==============
 export const createProduct = asyncHandler(
   async (req: Request, res: Response) => {
     const { category: categoryId, ...data } = req.body;
@@ -58,7 +59,7 @@ export const createProduct = asyncHandler(
     }
     res.status(201).json({
       //201 success
-      message: "Product Created.",
+      message: "Product Created Successfully.",
       success: true,
       status: "success",
       data: product,
@@ -66,13 +67,13 @@ export const createProduct = asyncHandler(
   }
 );
 
-//get all products
+//get all products  ==============
 
 export const getAllProducts = asyncHandler(
   async (req: Request, res: Response) => {
-    const products = await Product.find();
+    const products = await Product.find().populate("category"); //populate("category") means it display the data of category full data having the same ref: name from model of products
     res.status(200).json({
-      message: "All Products fetched",
+      message: "All Products fetched successfully",
       success: true,
       status: "success",
       data: products,
@@ -80,15 +81,15 @@ export const getAllProducts = asyncHandler(
   }
 );
 
-//getbyId products
+//getbyId products  ==============
 
 export const getByIdProduct = asyncHandler(
   async (req: Request, res: Response) => {
     //get id from req.params
     const { id } = req.params; //req.params refers to an object that contains route parameters
 
-    //get category bi given id
-    const product = await Product.findById(id);
+    //get category by given id
+    const product = await Product.findById(id).populate("category");
     if (!product) {
       throw new CustomError("Product not found", 404);
     }
@@ -101,21 +102,87 @@ export const getByIdProduct = asyncHandler(
   }
 );
 
-//update products
+// 1. json => name, category, price ..
+
+// 2. images [5] [2 old => delete] [add 2 => new images]
+
+//update products ==============
 export const updateProducts = asyncHandler(
   async (req: Request, res: Response) => {
     const { id } = req.params;
+    const { coverImage, images } = req.files as {
+      coverImage: Express.Multer.File[];
+      images: Express.Multer.File[];
+    };
+    const {
+      deletedImage,
+      name,
+      description,
+      stock,
+      brand,
+      category,
+      isFeatured,
+      price,
+    } = req.body;
 
-    const { name, price, description, stock, brand, isFeatured } = req.body;
+    if (category) {
+      const productCategory = await Category.findById(category);
+      if (!productCategory) {
+        throw new CustomError("Category not found", 404);
+      }
+    }
     const updatedproduct = await Product.findByIdAndUpdate(
       id,
-      { name, price, description, stock, brand, isFeatured },
-      { new: true } //return the document as it was before the update
+      {
+        name,
+        description,
+        stock,
+        brand,
+        category,
+        isFeatured,
+        price,
+      },
+      { new: true, runValidators: true } //return the document as it was before the update
     );
 
     if (!updatedproduct) {
       throw new CustomError("Updated Product Not Found", 404);
     }
+
+    //update cover image
+    if (coverImage) {
+      if (updatedproduct.coverImage) {
+        await removeImages([updatedproduct.coverImage.public_id]);
+      }
+
+      updatedproduct.coverImage = {
+        path: coverImage[0].path,
+        public_id: coverImage[0].filename,
+      };
+    }
+
+    //images update
+    if (Array.isArray(deletedImage) && deletedImage.length > 0) {
+      await removeImages(deletedImage);
+      if (updatedproduct.images) {
+        updatedproduct.images =
+          (updatedproduct.images.filter(
+            (img) => !deletedImage.includes(img.public_id)
+          ) as any) ?? [];
+      }
+    }
+
+    //update images
+    if (images && images.length > 0) {
+      const newImages = images.map((img) => ({
+        path: img.path,
+        public_id: img.filename,
+      }));
+      updatedproduct.set("images", [...updatedproduct.images, ...newImages]); // ... spread operator:  it spread makes the product.image with new Array
+    }
+
+    await updatedproduct.save();
+
     res.status(200).json({
       message: "Product updated successfully",
       success: true,
@@ -125,20 +192,73 @@ export const updateProducts = asyncHandler(
   }
 );
 
-//delete products
+//delete products  ==============
 export const removeProduct = asyncHandler(
   async (req: Request, res: Response) => {
     const { id } = req.params;
-    const deleteproduct = await Product.findByIdAndDelete(id, { new: true });
+
+    //1. get product
+    const deleteproduct = await Product.findById(id);
 
     if (!deleteproduct) {
       throw new CustomError("Deleted product Not Found", 404);
     }
+    // 2. products images => delete
+
+    //for coverImage
+    if (deleteproduct.coverImage) {
+      await removeImages([deleteproduct.coverImage.public_id]);
+    }
+    //for images
+    if (deleteproduct.images && deleteproduct.images.length > 0) {
+      const imageIds: string[] = deleteproduct.images.map(
+        (image) => image.public_id as string
+      );
+      await removeImages(imageIds);
+    }
+
+    // 3. delete product
+    await deleteproduct.deleteOne();
+
     res.status(200).json({
       message: "Product deleted successfully!",
       success: true,
       status: "success",
       data: null,
+    });
+  }
+);
+
+//get all featured products
+
+export const getFeaturedProducts = asyncHandler(
+  async (req: Request, res: Response) => {
+    const featured = await Product.find({ isFeatured: true }).populate(
+      "category"
+    );
+
+    res.status(200).json({
+      status: "success",
+      success: true,
+      message: "Featured Products Fetched Successfully",
+      data: featured,
+    });
+  }
+);
+
+//get by category id
+
+export const getByCategory = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { categoryId } = req.params;
+    const categoryproduct = await Product.find({
+      category: categoryId,
+    }).populate("category");
+    res.status(200).json({
+      status: "success",
+      success: true,
+      message: "Producs by Category Fetched Successfully",
+      data: categoryproduct,
     });
   }
 );
