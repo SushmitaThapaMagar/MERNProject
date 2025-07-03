@@ -48,7 +48,7 @@ export const authenticate = (roles?: Role[]) => {
 
       //role based ??
       //If all checks pass, it calls next() to proceed to the next middleware or route handler
-      next();
+      // next();
 
       //Logs the decoded data and the token for debugging purposes.
       console.log(decodedData);
@@ -59,6 +59,15 @@ export const authenticate = (roles?: Role[]) => {
       if (roles && !roles.includes(user.role)) {
         throw new CustomError("Forbidden. Access denied", 403);
       }
+
+      // cart needed the user details to add to cart that's we made req.user
+      req.user = {
+        _id: user._id,
+        role: user.role,
+        email: user.email,
+        full_name: user.full_name,
+      };
+      next();
     } catch (err) {
       next(err);
     }

@@ -217,3 +217,67 @@ used for uploading files in a Node.js application.
 CLOUDINARY MEANING ====== 27/6/2025
 //third party software that is used to host the file images or vedio
 // cloudinary is used to upload files including images,videos in the cloud 
+
+
+
+
+//wishlist controller explanations:
+
+//Creating wishlist
+export const createWish = asyncHandler(async (req: Request, res: Response) => {
+  // add in user model
+  // why userid == which user, wishlist should be added
+  const userId = req.user._id;
+
+  //which product Id should be added by user so it is in body
+  const { productId } = req.body;
+
+  //if productid exists or not
+  if (!productId) {
+    throw new CustomError("ProductId is required", 400);
+  }
+
+  const product = await Product.findById(productId);
+
+  //if product exists or not
+  if (!product) {
+    throw new CustomError("Product not found", 404);
+  }
+
+  //this part is not required to check is the user id exists or not
+  // this part checks if user is logged in or not
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    throw new CustomError("User not found", 404);
+  }
+
+  //check if a specific product (identified by its _id) already exists in a user's wishlist
+  const isProductAlreadyExits = user.wishlist.find(
+    //user.wishlist refers to an array of products user has added to wishlist
+    // find(...) : use to search though wishlist array
+    // callback function that checks whether the current product is equal to product._id
+    (product) => product === product._id
+  );
+
+  //if product already exists then
+
+  if (isProductAlreadyExits) {
+    // If the product exists, this line filters the wishlist array to remove the product with the specified _id
+    user.wishlist = user.wishlist.filter((product) => product !== product._id);
+  } else {
+    //If the product does not exist in the wishlist, it adds the product._id to the wishlist array using the push method
+    user.wishlist.push(product._id);
+    //push() method : used to add one or more elements to the end of an array
+  }
+  //saves the updated user object
+  await user.save();
+
+  res.status(201).json({
+    message: `${isProductAlreadyExits ? "Removed from " : "Added to"} wishlist`,
+    status: "success",
+    success: true,
+    data: user.wishlist,
+  });
+});

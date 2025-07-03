@@ -13,6 +13,7 @@ import CustomError, {
 import categoryRoutes from "./routes/category.route";
 import productRoutes from "./routes/product.route";
 import cartRoutes from "./routes/cart.route";
+import wishlistRoutes from "./routes/wishlist.route";
 const app = express();
 const PORT = process.env.PORT || 8000;
 const DB_URI = process.env.DB_URI ?? "";
@@ -39,7 +40,8 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/product", productRoutes);
-app.use("api/cart", cartRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/wishlist", wishlistRoutes);
 
 app.all("/{*spalt}", (req: Request, res: Response, next: NextFunction) => {
   const message = `Can not ${req.method} on ${req.url}`;
