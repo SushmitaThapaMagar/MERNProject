@@ -5,26 +5,28 @@ const userSchema = new mongoose.Schema(
   {
     full_name: {
       type: String,
-      required: [true, "Full_name is requires"],
+      required: [true, "Full_name is required"],
       trim: true, //remove the uneccessary space in full name
     },
     email: {
-      required: [true, "Email is requires"],
+      required: [true, "Email is required"],
       type: String,
       unique: [true, "User already exist with provided email!"],
     },
     password: {
-      required: [true, "Password is requires"],
+      required: [true, "Password is required"],
       min: [, "Password must be at least 6 char long"],
       type: String,
     },
     phone_number: {
       type: String,
     },
-    wishlist:[{
-      type:mongoose.Schema.Types.ObjectId,
-      ref:'product'
-    }],
+    wishlist: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "product",
+      },
+    ],
     role: {
       type: String,
       enum: Object.values(Role),
