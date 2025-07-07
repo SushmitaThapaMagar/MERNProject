@@ -23,16 +23,17 @@ const router = express.Router();
 router.post("/", authenticate(onlyUser), createOrder);
 // delete order (admin, user)
 router.delete("/:id", authenticate(onlyAdmin), removeOrder);
+
 // get all orders (only admin)
 router.get("/", authenticate(onlyAdmin), getAllOrders);
 // get all order for users (only user)
 router.get("/user", authenticate(onlyUser), getAllByUserId);
-// put status
-router.put("/:id", authenticate(onlyAdmin), updateStatus);
 // get order by id (user, admin)
 router.get("/:id", authenticate(onlyAdminAndUser), getOrderById);
+
 //user cancel order
-router.delete("/:id", authenticate(onlyAdminAndUser), cancelOrder);
+router.put("/:id", authenticate(onlyAdmin), updateStatus);
+router.put("/cancel/:id", authenticate(onlyAdminAndUser), cancelOrder);
 
 export default router;
 

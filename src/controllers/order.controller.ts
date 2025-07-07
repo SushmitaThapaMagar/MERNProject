@@ -4,6 +4,7 @@ import { asyncHandler } from "../utils/async-handler.utils";
 import { Request, Response } from "express";
 import Order from "../models/order.model";
 import CustomError from "../middlewares/error-handler.middleware";
+import { OrderStatus } from "../types/global.types";
 
 //create order
 export const createOrder = asyncHandler(async (req: Request, res: Response) => {
@@ -146,6 +147,7 @@ export const cancelOrder = asyncHandler(async (req: Request, res: Response) => {
   const { id } = req.params;
   //get user id from req.user._id
   const userId = req.user._id;
+  //find order by id
   const order = await Order.findById(id)
     .populate("user", "-password")
     .populate("items.product");
@@ -158,7 +160,7 @@ export const cancelOrder = asyncHandler(async (req: Request, res: Response) => {
     throw new CustomError("You cannot cancel this order", 403);
   }
 
-  order.status = "Canceled";
+  order.status = OrderStatus.CANCELED;
   await order.save();
 
   res.status(200).json({
