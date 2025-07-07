@@ -165,6 +165,6 @@ export const cancelOrder = asyncHandler(async (req: Request, res: Response) => {
     message: "Order canceled Successfully",
     status: "success",
     success: true,
-    data: canceledOrder,
+    data: order,
   });
 });
