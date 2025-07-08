@@ -71,7 +71,50 @@ export const createProduct = asyncHandler(
 
 export const getAllProducts = asyncHandler(
   async (req: Request, res: Response) => {
-    const products = await Product.find().populate("category"); //populate("category") means it display the data of category full data having the same ref: name from model of products
+    //http://localhost:port/path?......query
+
+    const { query, minPrice, maxPrice } = req.query;
+    const filter: Record<string, any> = {}; // create object or filter is an object where you can filter anything you like
+    console.log(query);
+    if (query) {
+      filter.$or = [
+        {
+          name: {
+            $regex: query,
+            $options: "i",
+          },
+        },
+        {
+          descrition: {
+            $regex: query,
+            $options: "i",
+          },
+        },
+      ];
+    }
+
+    if (minPrice || maxPrice) {
+      if (minPrice && maxPrice) {
+        filter.price = {
+          $lte: Number(maxPrice as string),
+          $gte: Number(minPrice as string),
+        };
+      }
+
+      if (minPrice) {
+        filter.price = {
+          $gte: Number(minPrice as string),
+        };
+      }
+
+      if (maxPrice) {
+        filter.price = {
+          $lte: Number(minPrice as string),
+        };
+      }
+    }
+
+    const products = await Product.find(filter).populate("category"); //populate("category") means it display the data of category full data having the same ref: name from model of products
     res.status(200).json({
       message: "All Products fetched successfully",
       success: true,
@@ -89,7 +132,7 @@ export const getByIdProduct = asyncHandler(
     const { id } = req.params; //req.params refers to an object that contains route parameters
 
     //get category by given id
-    const product = await Product.findById(id).populate("category");
+    const product = await Product.findOne({ _id: id }).populate("category");
     if (!product) {
       throw new CustomError("Product not found", 404);
     }

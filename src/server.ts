@@ -15,6 +15,7 @@ import productRoutes from "./routes/product.route";
 import cartRoutes from "./routes/cart.route";
 import wishlistRoutes from "./routes/wishlist.route";
 import orderRoutes from "./routes/order.route";
+import brandRoutes from "./routes/brand.route";
 const app = express();
 const PORT = process.env.PORT || 8000;
 const DB_URI = process.env.DB_URI ?? "";
@@ -44,6 +45,7 @@ app.use("/api/product", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/order", orderRoutes);
+app.use("/app/brand", brandRoutes);
 
 app.all("/{*spalt}", (req: Request, res: Response, next: NextFunction) => {
   const message = `Can not ${req.method} on ${req.url}`;
