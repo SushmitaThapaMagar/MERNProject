@@ -281,3 +281,8 @@ export const createWish = asyncHandler(async (req: Request, res: Response) => {
     data: user.wishlist,
   });
 });
+
+
+
+========= Pagination :
+current page and limit: how many data in one batch

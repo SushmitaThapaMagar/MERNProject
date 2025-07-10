@@ -23,7 +23,26 @@ export const create = asyncHandler(async (req: Request, res: Response) => {
 //get all categories
 
 export const getAll = asyncHandler(async (req: Request, res: Response) => {
-  const categories = await Category.find();
+  const { query } = req.query;
+  const filter: Record<string, any> = {}; // create object or filter is an object where you can filter anything you like
+  console.log(query);
+  if (query) {
+    filter.$or = [
+      {
+        name: {
+          $regex: query,
+          $options: "i",
+        },
+      },
+      {
+        descrition: {
+          $regex: query,
+          $options: "i",
+        },
+      },
+    ];
+  }
+  const categories = await Category.find(filter);
   res.status(200).json({
     message: "All category fetched",
     success: true,

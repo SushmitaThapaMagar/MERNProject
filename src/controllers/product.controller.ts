@@ -5,6 +5,7 @@ import Product from "../models/product.model";
 import path from "path";
 import Category from "../models/category.model";
 import { removeImages } from "../cloudinary.config";
+import { getPagination } from "../utils/pagination.utils";
 // name
 // price
 // description
@@ -67,14 +68,22 @@ export const createProduct = asyncHandler(
   }
 );
 
-//get all products  ==============
+//Get all products  ==============
 
 export const getAllProducts = asyncHandler(
   async (req: Request, res: Response) => {
     //http://localhost:port/path?......query
 
-    const { query, minPrice, maxPrice } = req.query;
+    const { query, category, minPrice, maxPrice, page, limit } = req.query;
     const filter: Record<string, any> = {}; // create object or filter is an object where you can filter anything you like
+
+    //pagination
+    const perPage = parseInt(limit as string) ?? 10;
+    const currentPage = parseInt(page as string) ?? 20;
+
+    //calculate skip
+    const skip = (currentPage - 1) * perPage;
+
     console.log(query);
     if (query) {
       filter.$or = [
@@ -91,6 +100,10 @@ export const getAllProducts = asyncHandler(
           },
         },
       ];
+    }
+    //for filter by category
+    if (category) {
+      filter.category = category;
     }
 
     if (minPrice || maxPrice) {
@@ -114,12 +127,21 @@ export const getAllProducts = asyncHandler(
       }
     }
 
-    const products = await Product.find(filter).populate("category"); //populate("category") means it display the data of category full data having the same ref: name from model of products
+    const products = await Product.find(filter)
+      .limit(perPage) //limitation of data is perpage
+      .skip(skip) //skip the data as skip
+      .sort({ createdAt: -1 }) //sorted from the most recently created to the oldest.
+      .populate("category"); //populate("category") means it display the data of category full data having the same ref: name from model of products
+
+    // to count the number of documents in a MongoDB collection
+    const totalData = await Product.countDocuments(filter);
+    const pagination = getPagination(totalData, perPage, currentPage);
+
     res.status(200).json({
       message: "All Products fetched successfully",
       success: true,
       status: "success",
-      data: products,
+      data: { products, pagination },
     });
   }
 );

@@ -5,9 +5,18 @@ import Brand from "../models/brand.model";
 import { asyncHandler } from "../utils/async-handler.utils";
 import CustomError from "../middlewares/error-handler.middleware";
 
-//create (post method)
+//create (post method) ==============
 export const createBrand = asyncHandler(async (req: Request, res: Response) => {
   const { name, description } = req.body;
+
+  // //for logo image
+  // const { logo } = req.files as {
+  //   logo: Express.Multer.File[];
+  // };
+  // //if not logo
+  // if (!logo) {
+  //   throw new CustomError("Logo is required", 400);
+  // }
 
   const brandExists = await Brand.findOne({ name });
   if (brandExists) {
@@ -16,6 +25,15 @@ export const createBrand = asyncHandler(async (req: Request, res: Response) => {
 
   const brand = await Brand.create({ name, description });
 
+  // //add brand logo
+  // brand.logo = {
+  //   path: logo[0].path,
+  //   public_id: logo[0].filename,
+  // };
+
+  // //save
+  // await brand.save();
+
   res.status(201).json({
     message: "Brand created successfully",
     success: true,
@@ -23,9 +41,30 @@ export const createBrand = asyncHandler(async (req: Request, res: Response) => {
   });
 });
 
-//getAll brands (get method)
+//getAll brands (get method)  ==============
 export const getAllBrands = asyncHandler(
   async (req: Request, res: Response) => {
+    const { query } = req.query;
+    const filter: Record<string, any> = {}; // create object or filter is an object where you can filter anything you like
+    console.log(query);
+
+    //query
+    if (query) {
+      filter.$or = [
+        {
+          name: {
+            $regex: query,
+            $options: "i",
+          },
+        },
+        {
+          descrition: {
+            $regex: query,
+            $options: "i",
+          },
+        },
+      ];
+    }
     const brands = await Brand.find().sort({ createdAt: -1 });
     res.status(200).json({
       message: "Brands fetched successfully",
@@ -35,7 +74,7 @@ export const getAllBrands = asyncHandler(
   }
 );
 
-//getby id (get method)
+//getby id (get method) ==============
 export const getBrandById = asyncHandler(
   async (req: Request, res: Response) => {
     const brand = await Brand.findById(req.params.id);
@@ -50,9 +89,14 @@ export const getBrandById = asyncHandler(
   }
 );
 
-//update (put method)
+//update (put method)  ==============
 export const updateBrand = asyncHandler(async (req: Request, res: Response) => {
   const { name, description } = req.body;
+
+  // //for logo
+  // const { logo } = req.files as {
+  //   logo: Express.Multer.File[];
+  // };
 
   const updatedbrand = await Brand.findByIdAndUpdate(
     req.params.id,
@@ -64,6 +108,11 @@ export const updateBrand = asyncHandler(async (req: Request, res: Response) => {
     throw new CustomError("Brand not found", 404);
   }
 
+  // //update logo
+  // if (logo) {
+  //   if (updatedbrand.logo) {
+  //   }
+  // }
   res.status(200).json({
     message: "Brand updated successfully",
     success: true,
@@ -71,7 +120,7 @@ export const updateBrand = asyncHandler(async (req: Request, res: Response) => {
   });
 });
 
-//delete brand (delete)
+//delete brand (delete)  ==============
 export const deleteBrand = asyncHandler(async (req: Request, res: Response) => {
   const deletedBrand = await Brand.findByIdAndDelete(req.params.id);
   if (!deletedBrand) {
