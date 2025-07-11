@@ -1,22 +1,17 @@
 import express from "express";
 
 import { onlyUser } from "../types/global.types";
-import {
-  deleteAccount,
-  getProfile,
-  loginUser,
-  registerUser,
-  updateProfile,
-} from "../controllers/user.controller";
+import { deleteAccount, updateProfile } from "../controllers/user.controller";
 import { authenticate } from "../middlewares/authenticate.middleware";
+import { login, register } from "../controllers/auth.controller";
 
-const router = express.Router();
+const router = express.Router(); //this is from the auth controller
 
-router.post("/register", registerUser);
+router.post("/register", register); //this is from the auth controller
 
-router.post("/login", loginUser);
+router.post("/login", login);
 
-router.get("/profile", authenticate(onlyUser), getProfile);
+// router.get("/profile", authenticate(onlyUser), getProfile);
 
 router.put("/profile", authenticate(onlyUser), updateProfile);
 

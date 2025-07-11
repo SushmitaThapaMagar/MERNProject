@@ -11,12 +11,12 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Price is Required"],
     },
-    // brand: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "brand",
-    //   required: [true, "Brand is Required"],
-    //   trim: true,
-    // },
+    brand: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "brand",
+      required: [true, "Brand is Required"],
+      trim: true,
+    },
     category: {
       type: mongoose.Schema.Types.ObjectId, //returns in mongoose db idea
       ref: "category", //this is the name of the category model that is in categroySchema

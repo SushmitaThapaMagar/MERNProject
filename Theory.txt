@@ -283,6 +283,17 @@ export const createWish = asyncHandler(async (req: Request, res: Response) => {
 });
 
 
-
 ========= Pagination :
 current page and limit: how many data in one batch
+
+
+===== Last Topic of MongoDB =====
+1. MongoDB Atlas
+2. Sign In
+ 
+
+// why on cloud== > to make publicly accessible 
+=> for publicly access we use cloud
+
+// mongodb is for local use or personal user only 
+
