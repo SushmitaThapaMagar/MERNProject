@@ -5,19 +5,23 @@ import { Request, Response } from "express";
 import Order from "../models/order.model";
 import CustomError from "../middlewares/error-handler.middleware";
 import { OrderStatus } from "../types/global.types";
+import { sendMail } from "../utils/nodemailer.utils";
+import { order_confirmation_html } from "../utils/html.utils";
 
 //create order
 export const createOrder = asyncHandler(async (req: Request, res: Response) => {
-  const user = req.user._id;
+  const { _id: user, email } = req.user;
   const { items } = req.body;
 
   const orderItems: { product: string; quantity: number }[] = JSON.parse(items);
 
-  const promiseArr = orderItems.map(async (item) => {
+  const orderProducts = orderItems.map(async (item) => {
     const product = await Product.findById(item.product);
+
     if (!product) {
       return null;
     }
+
     return {
       product: product._id,
       quantity: item.quantity,
@@ -25,11 +29,10 @@ export const createOrder = asyncHandler(async (req: Request, res: Response) => {
     };
   });
 
-  const products = await Promise.all(promiseArr);
+  const products = await Promise.all(orderProducts);
 
-  const filteredItems = products.filter((item) => item != null);
+  const filteredItems = products.filter((item) => item !== null);
 
-  //total Amount
   const totalAmount = filteredItems
     .reduce((acc, item) => {
       return (acc += item?.totalPrice);
@@ -40,8 +43,14 @@ export const createOrder = asyncHandler(async (req: Request, res: Response) => {
 
   const newOrder = await (await order.save()).populate("items.product");
 
+  await sendMail({
+    to: email,
+    subject: "Order Placed Successfully",
+    html: order_confirmation_html(newOrder.items, Number(totalAmount)),
+  });
+
   res.status(201).json({
-    message: "Order Placed successfully",
+    message: "Order placed successfully",
     success: true,
     status: "success",
     data: newOrder,
@@ -159,7 +168,7 @@ export const cancelOrder = asyncHandler(async (req: Request, res: Response) => {
   if (order.user?.toString() !== userId.toString()) {
     throw new CustomError("You cannot cancel this order", 403);
   }
-//
+  //
   order.status = OrderStatus.CANCELED;
   await order.save();
 

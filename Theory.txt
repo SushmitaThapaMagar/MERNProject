@@ -297,3 +297,10 @@ current page and limit: how many data in one batch
 
 // mongodb is for local use or personal user only 
 
+
+
+=== 2025/07/13
+npm i nodemailer 
+Incase of error
+npm i nodemailer --force
+npm install --save-dev @types/nodemailer --force

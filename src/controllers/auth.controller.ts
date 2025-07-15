@@ -4,50 +4,54 @@ import { compare, hash } from "../utils/bcrypt";
 import CustomError from "../middlewares/error-handler.middleware";
 import { asyncHandler } from "../utils/async-handler.utils";
 import { generateJWTToken } from "../utils/jwt.utils";
+import { sendMail } from "../utils/nodemailer.utils";
+import { account_registration_confirmation_html } from "../utils/html.utils";
 
 //Register success====================
 
 export const register = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { email, full_name, password, phone_number } = req.body; //extracts email, full_name, password, and phone_number from the req.body object. req.body contains the data sent by the client
+    // req.body
 
-      if (!password) {
-        throw new CustomError("Password is Required.", 400);
-      }
+    const { email, full_name, password, phone_number } = req.body;
 
-      //hashing user password
-
-      const hashedPassword = await hash(password);
-
-      //creating user
-      const user = await User.create({
-        email,
-        full_name,
-        password: hashedPassword,
-        phone_number,
-      });
-      //throw error
-      if (!user) {
-        throw new CustomError("Registration Failed. Try Again later.", 500);
-      }
-
-      //success response
-      res.status(201).json({
-        //in create 201 status
-        message: "User Registered",
-        success: true,
-        status: "success",
-        data: user,
-      });
-    } catch (error: any) {
-      // res.status(500).json({
-      //   message: error?.message ?? "internet Server Error",
-      //   success: false,
-      //   status: "fail",
-      // });
-      next(error);
+    if (!password) {
+      throw new CustomError("Password is required.", 400);
     }
+    // hashing user password
+    const hashedPassword = await hash(password);
+
+    // creating new user
+    const user = await User.create({
+      email,
+      full_name,
+      password: hashedPassword,
+      phone_number,
+    });
+
+    // throw error
+    if (!user) {
+      throw new CustomError("Registration failed.Try again later.", 500);
+    }
+
+    // throw error
+    if (!user) {
+      throw new CustomError("Registration failed.Try again later.", 500);
+    }
+
+    await sendMail({
+      to: user.email,
+      subject: "Account Registered Successfully",
+      html: account_registration_confirmation_html(req, user),
+    });
+
+    // success response
+    res.status(201).json({
+      message: "User registered",
+      success: true,
+      status: "success",
+      data: user,
+    });
   }
 );
 

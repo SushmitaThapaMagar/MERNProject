@@ -9,30 +9,18 @@ import CustomError from "../middlewares/error-handler.middleware";
 export const createBrand = asyncHandler(async (req: Request, res: Response) => {
   const { name, description } = req.body;
 
-  // //for logo image
-  // const { logo } = req.files as {
-  //   logo: Express.Multer.File[];
-  // };
-  // //if not logo
-  // if (!logo) {
-  //   throw new CustomError("Logo is required", 400);
-  // }
-
+  console.log(req.body);
+  // Check if values are provided
+  if (!name || !description) {
+    throw new CustomError("Name and description are required", 400);
+  }
   const brandExists = await Brand.findOne({ name });
   if (brandExists) {
     throw new CustomError("Brand already exists", 400);
   }
 
+  // Create the brand
   const brand = await Brand.create({ name, description });
-
-  // //add brand logo
-  // brand.logo = {
-  //   path: logo[0].path,
-  //   public_id: logo[0].filename,
-  // };
-
-  // //save
-  // await brand.save();
 
   res.status(201).json({
     message: "Brand created successfully",
