@@ -304,3 +304,17 @@ npm i nodemailer
 Incase of error
 npm i nodemailer --force
 npm install --save-dev @types/nodemailer --force
+
+
+// Today's Learning
+it turns the ts file into js file
+- npm run build
+
+
+on browser
+- on render -- login --https://dashboard.render.com/
+-- https://mernproject-1-m01n.onrender.com/
+
+Render helps you to run server live
+- backend deploy on cloud useing render
+- local verison into live verison
