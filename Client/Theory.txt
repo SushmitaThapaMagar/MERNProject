@@ -1,0 +1,22 @@
+Theory for Client
+1. npm i
+
+
+== Routing in React: It allows you to create single-page applications (SPAs) that can load different content without refreshing the entire page
+It allows you to create single-page applications (SPAs) 
+that can load different content without refreshing 
+the entire page
+By Default, routing in React doesnot come
+
+tsx vs jsx => used for UI component 
+Which page to show and which to hide => react router play the vital role
+
+
+==== Entry for react-router-dom
+- using router-dom because React for handling routing in web applications
+1. npm i react-router
+
+
+
+
+
