@@ -16,7 +16,69 @@ Which page to show and which to hide => react router play the vital role
 - using router-dom because React for handling routing in web applications
 1. npm i react-router
 
+HTML tags:
+
+1. Semantic tags : <main></main> : used for the easiness of page for certain purpose
+<footer></footer> : use for footer
+<section></section> : use for section
+<aside></aside> : for side bar
+<header></header> : for headings
+<nav></nav> : for navs
+
+2. Non-Semantic tags
+
+<div></div> : no meaning (seems similar to section)
+<span></span>
+
+
+=== Block, inline, inline-block elements === 
+
+Block tag properties === 
+
+1. takes full with of parent
+2. always starts from new line
+3. can set height, width, margin, padding properties
+e.g div, p, h1-h6, section
+
+Inline tag properties
+
+1. takes width as it contains
+2. always start with same line
+3. cannot set height with margin and padding
+e.g. span, input, a, i , b
+<span
+            style={{
+              display: "inline-block",
+              border: "1 px solid green",
+              height: "200px",
+            }}
+          ></span>
+
+Inline-Block tag properties
+
+1. mix of black and inline
+2. we can make any block elements inline-block element by setting display properties
+e.g. input, button
+
+e.g. display:inline-block
+
+
+padding : inside space of elements
+margin : outside space of elements
+
+
+Input type : text, email, checkbox, radio, name, date-time local,date, time, file, password, search
+type="date"  : gives date
+type="file" : gives file 
 
 
 
+CSS properties ===
 
+gap:
+justify-content : 
+align-items:
+
+
+//Play game for better understaing : https://flexboxfroggy.com 
+ 
