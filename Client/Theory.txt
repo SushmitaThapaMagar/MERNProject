@@ -82,3 +82,25 @@ align-items:
 
 //Play game for better understaing : https://flexboxfroggy.com 
  
+
+
+ === 7/22/2025 
+ - Installing extentions for handling brackets and allows
+
+ Intro tailwind : sab tailwind ko huncha p-1 mai
+
+
+
+ padding : p-1 = 4 px of padding
+
+
+ == React Icon package 
+-- npm install react-icons
+
+1. copy on input.tsx 
+=== import { FaAsterisk } from "react-icons/fa";
+=== <FaAsterisk/>
+
+
+FC:IProps ===== functional component of IProps(if you need to pass properties from parent to child)
+its simply passsing the properties function from parent to child (but not passing from child to parent)

@@ -1,9 +1,8 @@
 import "./App.css";
 import HomePage from "./pages/home";
-import Login from "./pages/login";
+import Login from "./pages/auth/login";
 import PageNotFound from "./pages/page-not-found";
-import ProductDetail from "./pages/product-detail";
-import Register from "./pages/register";
+import Register from "./pages/auth/register";
 import { BrowserRouter as Router, Routes, Route } from "react-router";
 
 function App() {
@@ -15,7 +14,6 @@ function App() {
           {/*Defining page routes*/}
           <Route path="/" element={<HomePage />} />
           {/*route with parameter to make the recurring clear*/}
-          <Route path="/product/:id" element={<ProductDetail />} />
 
           <Route path="/login" element={<Login />} />
           <Route path="/sign-up" element={<Register />} />
