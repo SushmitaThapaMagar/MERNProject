@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { FaAsterisk } from "react-icons/fa";
+import { useFormContext } from "react-hook-form";
 
 interface IProps {
   label: string;
@@ -8,6 +9,7 @@ interface IProps {
   id: string;
   placeholder: string;
   required?: boolean;
+  rules?: any;
 }
 
 const Input: FC<IProps> = ({
@@ -17,7 +19,15 @@ const Input: FC<IProps> = ({
   type,
   placeholder,
   required = false,
+  rules,
 }) => {
+  const {
+    register,
+    watch,
+    formState: { errors },
+  } = useFormContext();
+  // console.log(name, watch(name));
+  console.log(errors);
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="flex">
@@ -28,12 +38,21 @@ const Input: FC<IProps> = ({
       </div>
       {/* input */}
       <input
-        className="border border-gray-300 p-2 rounded-md placeholder:text-md text-md focus:outline-gray-400"
+        {...register(name, rules)}
+        value={watch(name)}
+        className={`border ${
+          errors[name]
+            ? "border-red-600 focus:outline-red-600"
+            : "border-blue-500 focus:outline-blue-500"
+        } border-gray-300 p-2 rounded-md placeholder:text-md text-md focus:outline-gray-400`}
         type={type}
         id={id}
-        name={name}
+        // name={name}
         placeholder={placeholder}
       />
+      <p className="text-xs text-red-700 min-h-[10px]">
+        {errors[name] ? errors[name] && (errors[name]?.message as string) : ""}
+      </p>
     </div>
   );
 };

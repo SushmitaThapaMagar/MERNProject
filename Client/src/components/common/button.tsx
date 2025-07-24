@@ -9,6 +9,9 @@ const Button: FC<IProps> = ({ label, type = "button" }) => {
   return (
     <div>
       <button
+        // onClick={() => {
+        //   console.log("Button Clicked");
+        // }}
         className=" tracking-wider bg-orange-600 hover:bg-orange-800  transition-all duration-300 w-full p-2 rounded-md font-bold text-md text-white cursor-pointer mt-3"
         type={type}
       >

@@ -104,3 +104,30 @@ align-items:
 
 FC:IProps ===== functional component of IProps(if you need to pass properties from parent to child)
 its simply passsing the properties function from parent to child (but not passing from child to parent)
+
+
+
+025/24/07
+React Hook Form : manage itself
+
+  //hook : predefined special features
+  //useState() : any components use frequently
+
+- npm install react-hook-form
+
+  const { register, watch } = useFormContext();
+
+  //watch ? => currently in form we pass email, password, name == Watch is the function of react hook to see the value and returns the value in input
+
+
+// e.preventDefault() ???
+
+ const onSubmit = (e: any) => {
+    e.preventDefault();
+    console.log("Form Submitted");
+  };
+
+
+Calling function calls the function in body for example : onClick
+
+file type is always in tsx while component files are in tsx
