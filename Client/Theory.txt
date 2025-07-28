@@ -17,7 +17,7 @@ Which page to show and which to hide => react router play the vital role
 1. npm i react-router
 
 HTML tags:
-
+ 
 1. Semantic tags : <main></main> : used for the easiness of page for certain purpose
 <footer></footer> : use for footer
 <section></section> : use for section
@@ -131,3 +131,20 @@ React Hook Form : manage itself
 Calling function calls the function in body for example : onClick
 
 file type is always in tsx while component files are in tsx
+
+yup vaneko afno custom messege dekhaunu lai
+- npm i yup
+- npm i @hookform/resolvers
+
+
+cors = curse origin resource sharing
+for frontend, it
+
+
+- npm install react-icons 
+
+
+React query
+- npm i @tanstack/react-query
+
+useMutation

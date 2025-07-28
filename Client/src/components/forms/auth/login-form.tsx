@@ -1,19 +1,41 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import type { ILogin } from "../../../types/auth.types";
 import Button from "../../common/button";
 import Input from "../../common/inputs/input";
 import { useForm, FormProvider } from "react-hook-form";
+import { loginSchema } from "../../../schema/auth.schema";
+import { useMutation } from "@tanstack/react-query";
+import { login } from "../../auth/auth.api";
+import { useNavigate } from "react-router";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
+
   //configure hook form
   const methods = useForm({
     defaultValues: {
       email: "",
       password: "",
     },
+    resolver: yupResolver(loginSchema),
+    mode: "all",
+  });
+
+  //mutate is function, isPending is status
+  const { mutate, isPending } = useMutation({
+    //mutationFn : is
+    mutationFn: login,
+    onSuccess: (data) => {
+      console.log("Login success response", data);
+      navigate("/");
+    },
+    onError: (error) => {
+      console.log("Login error respsonse", error);
+    },
   });
 
   const onSubmit = (data: ILogin) => {
-    console.log("Form Submitted", data);
+    mutate(data);
   };
 
   return (
@@ -31,7 +53,7 @@ const LoginForm = () => {
               label={"Email"}
               name={"email"}
               placeholder={"shopkart@gmail.com"}
-              type={"email"}
+              type={"text"}
               rules={{
                 required: "Email is Required",
               }}
@@ -52,7 +74,11 @@ const LoginForm = () => {
               required
             />
           </div>
-          <Button label={"Login"} type="submit" />
+          <Button
+            isDisabled={isPending}
+            label={isPending ? "Logging In..." : "Login"}
+            type="submit"
+          />
         </form>
       </FormProvider>
     </div>
