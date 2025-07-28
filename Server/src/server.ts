@@ -3,6 +3,7 @@
 import "dotenv/config";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import { connectDb } from "./config/db-connect";
 import authRoutes from "./routes/auth.route";
@@ -17,6 +18,7 @@ import wishlistRoutes from "./routes/wishlist.route";
 import orderRoutes from "./routes/order.route";
 import brandRoutes from "./routes/brand.route";
 import userRoutes from "./routes/user.route";
+
 const app = express();
 
 const PORT = process.env.PORT || 8000;
@@ -26,6 +28,11 @@ const DB_URI = process.env.DB_URI ?? "";
 connectDb(DB_URI);
 
 //using middlewares
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 //extended : true is used for object is the obj is nested
 app.use(express.urlencoded({ extended: true })); //this let you recover the undefined when we post api
 app.use(express.json());
