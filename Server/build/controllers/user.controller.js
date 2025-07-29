@@ -98,12 +98,13 @@ const error_handler_middleware_1 = __importDefault(require("../middlewares/error
 // update profile
 exports.updateProfile = (0, async_handler_utils_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.user._id;
-    const { full_name, phone_number } = req.body;
+    const { first_name, last_name, phone_number } = req.body;
     const user = yield user_model_1.default.findById(userId);
     if (!user) {
         throw new error_handler_middleware_1.default("User not found", 404);
     }
-    user.full_name = full_name || user.full_name;
+    user.first_name = first_name || user.first_name;
+    user.last_name = last_name || user.last_name;
     user.phone_number = phone_number || user.phone_number;
     yield user.save();
     res.status(200).json({

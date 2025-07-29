@@ -13,7 +13,7 @@ export const register = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     // req.body
 
-    const { email, full_name, password, phone_number } = req.body;
+    const { email, first_name, last_name, password, phone_number } = req.body;
 
     if (!password) {
       throw new CustomError("Password is required.", 400);
@@ -24,7 +24,8 @@ export const register = asyncHandler(
     // creating new user
     const user = await User.create({
       email,
-      full_name,
+      first_name,
+      last_name,
       password: hashedPassword,
       phone_number,
     });
@@ -89,7 +90,8 @@ export const login = asyncHandler(
 
       //jwt token
       const payload = {
-        full_name: user.full_name,
+        first_name: user.first_name,
+        last_name: user.last_name,
         _id: user._id,
         role: user.role,
         email: user.email,

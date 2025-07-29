@@ -101,14 +101,16 @@ import CustomError from "../middlewares/error-handler.middleware";
 export const updateProfile = asyncHandler(
   async (req: Request, res: Response) => {
     const userId = req.user._id;
-    const { full_name, phone_number } = req.body;
+    const { first_name, last_name, phone_number } = req.body;
 
     const user = await User.findById(userId);
     if (!user) {
       throw new CustomError("User not found", 404);
     }
 
-    user.full_name = full_name || user.full_name;
+    user.first_name = first_name || user.first_name;
+    user.last_name = last_name || user.last_name;
+
     user.phone_number = phone_number || user.phone_number;
 
     await user.save();

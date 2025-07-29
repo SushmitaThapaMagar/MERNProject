@@ -6,9 +6,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const global_types_1 = require("../types/global.types");
 const userSchema = new mongoose_1.default.Schema({
-    full_name: {
+    first_name: {
         type: String,
-        required: [true, "Full_name is required"],
+        required: [true, "First_name is required"],
+        trim: true, //remove the uneccessary space in full name
+    },
+    last_name: {
+        type: String,
+        required: [true, "Last_name is required"],
         trim: true, //remove the uneccessary space in full name
     },
     email: {
