@@ -41,6 +41,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("dotenv/config");
 const helmet_1 = __importDefault(require("helmet"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
 const db_connect_1 = require("./config/db-connect");
 const auth_route_1 = __importDefault(require("./routes/auth.route"));
@@ -58,6 +59,9 @@ const DB_URI = (_a = process.env.DB_URI) !== null && _a !== void 0 ? _a : "";
 //connecing database
 (0, db_connect_1.connectDb)(DB_URI);
 //using middlewares
+app.use((0, cors_1.default)({
+    origin: "*",
+}));
 //extended : true is used for object is the obj is nested
 app.use(express_1.default.urlencoded({ extended: true })); //this let you recover the undefined when we post api
 app.use(express_1.default.json());
