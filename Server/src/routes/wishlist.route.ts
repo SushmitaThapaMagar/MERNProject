@@ -13,5 +13,5 @@ const router = express.Router();
 router.post("/", authenticate(onlyUser), createWish);
 router.delete("/", authenticate(onlyUser), clearWish);
 
-router.get("/", getAllWish);
+router.get("/", authenticate(onlyUser), getAllWish);
 export default router;
