@@ -60,7 +60,8 @@ const DB_URI = (_a = process.env.DB_URI) !== null && _a !== void 0 ? _a : "";
 (0, db_connect_1.connectDb)(DB_URI);
 //using middlewares
 app.use((0, cors_1.default)({
-    origin: "*",
+    origin: process.env.FORNT_END_URL || "http://localhost:3000",
+    credentials: true,
 }));
 //extended : true is used for object is the obj is nested
 app.use(express_1.default.urlencoded({ extended: true })); //this let you recover the undefined when we post api

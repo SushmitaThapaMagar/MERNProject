@@ -30,9 +30,11 @@ connectDb(DB_URI);
 //using middlewares
 app.use(
   cors({
-    origin: "*",
+    origin: process.env.FORNT_END_URL || "http://localhost:3000",
+    credentials: true,
   })
 );
+
 //extended : true is used for object is the obj is nested
 app.use(express.urlencoded({ extended: true })); //this let you recover the undefined when we post api
 app.use(express.json());
