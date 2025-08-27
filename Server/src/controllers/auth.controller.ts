@@ -109,6 +109,7 @@ export const login = asyncHandler(
           maxAge:
             parseInt(process.env.COOKIE_EXPIRES_IN ?? "1") * 60 * 60 * 1000,
           secure: false, //true in case of going on products
+          sameSite: "none",
         })
 
         .json({

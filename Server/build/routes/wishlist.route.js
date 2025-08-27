@@ -11,5 +11,5 @@ const router = express_1.default.Router();
 //getall
 router.post("/", (0, authenticate_middleware_1.authenticate)(global_types_1.onlyUser), wishlist_controller_1.createWish);
 router.delete("/", (0, authenticate_middleware_1.authenticate)(global_types_1.onlyUser), wishlist_controller_1.clearWish);
-router.get("/", wishlist_controller_1.getAllWish);
+router.get("/", (0, authenticate_middleware_1.authenticate)(global_types_1.onlyUser), wishlist_controller_1.getAllWish);
 exports.default = router;
