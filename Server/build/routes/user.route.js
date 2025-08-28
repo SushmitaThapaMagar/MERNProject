@@ -11,6 +11,7 @@ const auth_controller_1 = require("../controllers/auth.controller");
 const router = express_1.default.Router(); //this is from the auth controller
 router.post("/register", auth_controller_1.register); //this is from the auth controller
 router.post("/login", auth_controller_1.login);
+router.post("/logout", auth_controller_1.logout);
 // router.get("/profile", authenticate(onlyUser), getProfile);
 router.put("/profile", (0, authenticate_middleware_1.authenticate)(global_types_1.onlyUser), user_controller_1.updateProfile);
 router.delete("/profile", (0, authenticate_middleware_1.authenticate)(global_types_1.onlyUser), user_controller_1.deleteAccount);
