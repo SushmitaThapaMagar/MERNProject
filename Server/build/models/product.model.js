@@ -56,7 +56,7 @@ const productSchema = new mongoose_1.default.Schema({
     isFeatured: {
         //isFeatured is used for the features product e.g. NewArrival -- we use Feature Product as the display product or upcoming products
         type: Boolean,
-        default: false,
+        default: true,
         required: [true, "Featured is Required"],
     },
 }, { timestamps: true });
