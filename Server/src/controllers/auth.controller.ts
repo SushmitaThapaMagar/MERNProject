@@ -134,3 +134,19 @@ export const login = asyncHandler(
     }
   }
 );
+
+// Logout success==========
+export const logout = asyncHandler(async (req: Request, res: Response) => {
+  res
+    .clearCookie("access_token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "development" ? false : true,
+      sameSite: "none",
+    })
+    .status(200)
+    .json({
+      message: "Logged out successfully",
+      success: true,
+      status: "success",
+    });
+});

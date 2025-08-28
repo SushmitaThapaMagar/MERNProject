@@ -9,4 +9,5 @@ const router = (0, express_1.default)();
 //Register user
 router.post("/register", auth_controller_1.register);
 router.post("/login", auth_controller_1.login);
+router.post("/logout", auth_controller_1.logout);
 exports.default = router;
