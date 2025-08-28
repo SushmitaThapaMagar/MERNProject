@@ -98,7 +98,7 @@ exports.login = (0, async_handler_utils_1.asyncHandler)((req, res, next) => __aw
             .status(200)
             .cookie("access_token", token, {
             httpOnly: true,
-            maxAge: parseInt((_a = process.env.COOKIE_EXPIRES_IN) !== null && _a !== void 0 ? _a : "1") * 60 * 60 * 1000,
+            maxAge: parseInt((_a = process.env.COOKIE_EXPIRES_IN) !== null && _a !== void 0 ? _a : "7") * 60 * 60 * 1000,
             secure: false, //true in case of going on products
             sameSite: "none",
         })
