@@ -45,6 +45,8 @@ const authenticate = (roles) => {
             if (decodedData.exp * 1000 < Date.now()) {
                 res.clearCookie("access_token", {
                     httpOnly: true,
+                    secure: process.env.NODE_ENV === "development" ? true : false,
+                    sameSite: "none",
                 });
                 //If expired, it clears the token cookie and throws an unauthorized error
                 throw new error_handler_middleware_1.default("Unauthorized. Access denied", 401);

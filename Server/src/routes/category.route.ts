@@ -20,7 +20,7 @@ router.get("/", getAll);
 //getbyId
 router.get("/:id", authenticate(), getById);
 
-//update
+//updates
 router.put("/:id", authenticate(), authenticate([Role.ADMIN]), update);
 
 //remove

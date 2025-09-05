@@ -108,7 +108,7 @@ export const login = asyncHandler(
           httpOnly: true,
           maxAge:
             parseInt(process.env.COOKIE_EXPIRES_IN ?? "7") * 60 * 60 * 1000,
-          secure: false, //true in case of going on products
+          secure: process.env.NODE_ENV === "development" ? true : false, //true in case of going on products
           sameSite: "none",
         })
 

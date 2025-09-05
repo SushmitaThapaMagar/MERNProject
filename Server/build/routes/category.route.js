@@ -15,7 +15,7 @@ router.post("/", (0, authenticate_middleware_1.authenticate)([global_types_1.Rol
 router.get("/", category_controller_1.getAll);
 //getbyId
 router.get("/:id", (0, authenticate_middleware_1.authenticate)(), category_controller_1.getById);
-//update
+//updates
 router.put("/:id", (0, authenticate_middleware_1.authenticate)(), (0, authenticate_middleware_1.authenticate)([global_types_1.Role.ADMIN]), category_controller_1.update);
 //remove
 router.delete("/:id", (0, authenticate_middleware_1.authenticate)(), (0, authenticate_middleware_1.authenticate)([global_types_1.Role.ADMIN]), category_controller_1.remove);
