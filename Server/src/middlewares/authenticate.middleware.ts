@@ -41,7 +41,7 @@ export const authenticate = (roles?: Role[]) => {
       if (decodedData.exp * 1000 < Date.now()) {
         res.clearCookie("access_token", {
           httpOnly: true,
-          secure: process.env.NODE_ENV === "development" ? true : false,
+          secure: process.env.NODE_ENV === "development" ? false : true,
           sameSite: "none",
         });
         //If expired, it clears the token cookie and throws an unauthorized error

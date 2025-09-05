@@ -63,11 +63,10 @@ app.use((0, cors_1.default)({
     origin: process.env.FORNT_END_URL || "http://localhost:3000",
     credentials: true,
 }));
-//extended : true is used for object is the obj is nested
-app.use(express_1.default.urlencoded({ extended: true })); //this let you recover the undefined when we post api
-app.use(express_1.default.json());
+//extended : true is used for object is the obgi
 app.use((0, helmet_1.default)());
 app.use((0, cookie_parser_1.default)());
+app.use(express_1.default.json());
 //parse cooke
 app.get("/", (req, res) => {
     res.status(200).json({

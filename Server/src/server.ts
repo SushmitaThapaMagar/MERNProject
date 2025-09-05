@@ -35,11 +35,10 @@ app.use(
   })
 );
 
-//extended : true is used for object is the obj is nested
-app.use(express.urlencoded({ extended: true })); //this let you recover the undefined when we post api
-app.use(express.json());
+//extended : true is used for object is the obgi
 app.use(helmet());
 app.use(cookieParser());
+app.use(express.json());
 
 //parse cooke
 
