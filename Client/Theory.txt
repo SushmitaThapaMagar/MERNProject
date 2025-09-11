@@ -144,7 +144,20 @@ for frontend, it
 - npm install react-icons 
 
 
+AXIOS
+- npm i axios
+
+
 React query
 - npm i @tanstack/react-query
 
 useMutation
+
+
+for Toast
+- npm i react-hot-toast
+
+
+
+
+// what is axios interceptors

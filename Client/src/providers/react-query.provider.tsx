@@ -1,4 +1,3 @@
-//this file is for
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type React from "react";
 

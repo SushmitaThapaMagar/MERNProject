@@ -115,7 +115,6 @@ export const login = asyncHandler(
           secure: process.env.NODE_ENV === "development" ? false : true, //true in case of going on products
           sameSite: "none",
         })
-
         .json({
           message: "Login success",
           success: true,

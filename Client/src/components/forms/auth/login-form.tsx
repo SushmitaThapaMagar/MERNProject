@@ -5,11 +5,20 @@ import Input from "../../common/inputs/input";
 import { useForm, FormProvider } from "react-hook-form";
 import { loginSchema } from "../../../schema/auth.schema";
 import { useMutation } from "@tanstack/react-query";
-import { login } from "../../auth/auth.api";
-import { useNavigate } from "react-router";
+import { login } from "../../../api/auth.api";
+import { useLocation, useNavigate } from "react-router";
+import toast from "react-hot-toast";
+import { useContext } from "react";
+import { AuthContext } from "../../../context/auth.context";
+import { Role } from "../../../types/enums";
 
 const LoginForm = () => {
+  const { setUser, setToken } = useContext(AuthContext);
+
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname;
 
   //configure hook form
   const methods = useForm({
@@ -26,11 +35,24 @@ const LoginForm = () => {
     //mutationFn : is
     mutationFn: login,
     onSuccess: (data) => {
+      setUser(data.user);
+      setToken(data.access_token);
       console.log("Login success response", data);
-      navigate("/");
+
+      //store  user object and toek local storage
+      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("access_token", data.access_token);
+
+      //toast message show
+      toast.success(data.message ?? "Login Successful");
+      if (data.user.role === Role.ADMIN) {
+        navigate(from ?? "/admin", { replace: true });
+      } else {
+        navigate(from ?? "/", { replace: true });
+      }
     },
     onError: (error) => {
-      console.log("Login error respsonse", error);
+      toast.error(error.message ?? "Login Failed");
     },
   });
 
@@ -44,7 +66,7 @@ const LoginForm = () => {
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(onSubmit)}
-          className="flex flex-col gap-1"
+          className="flex flex-col gap-7"
         >
           <div>
             {/* Email */}

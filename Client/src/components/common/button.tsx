@@ -11,7 +11,7 @@ const Button: FC<IProps> = ({ label, type = "button", isDisabled = false }) => {
     <div>
       <button
         disabled={isDisabled}
-        className="disabled:cursor-not-allowed disabled: tracking-wider bg-cyan-700 hover:text-cyan-800  transition-all duration-300 w-full p-2 rounded-md font-bold text-md text-white cursor-pointer mt-3"
+        className="disabled:cursor-not-allowed disabled: tracking-wider bg-cyan-700 hover:text-cyan-800  transition-all duration-300 w-full p-2 rounded-md font-bold text-md text-white cursor-pointer"
         type={type}
       >
         {label}

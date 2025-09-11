@@ -17,7 +17,7 @@ const Login = () => {
         <div className="mt-3 text-center">
           <p className="mt-1">
             Do not have an account?{" "}
-            <Link to={"/sign-up"}>
+            <Link to={"/register"}>
               <span className="text-cyan-700 font-bold cursor-pointer">
                 {" "}
                 Sign Up

@@ -25,13 +25,6 @@ const Register = () => {
               </span>
             </Link>
           </p>
-          <p className="mt-1">
-            <i>
-              <span className="text-cyan-700 font-m cursor-pointer">
-                Forgot Password?
-              </span>
-            </i>
-          </p>
         </div>
       </div>
     </main>

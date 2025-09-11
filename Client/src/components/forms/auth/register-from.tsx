@@ -1,12 +1,16 @@
-import { FormProvider, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import type { IRegister } from "../../../types/auth.types";
 import Button from "../../common/button";
 import Input from "../../common/inputs/input";
-import type { IRegister } from "../../../types/auth.types";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm, FormProvider } from "react-hook-form";
+import { register } from "../../../api/auth.api";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
 import { RegisterSchema } from "../../../schema/auth.schema";
 
 const RegisterForm = () => {
-  //configure hooks
+  const navigate = useNavigate();
   const methods = useForm({
     defaultValues: {
       first_name: "",
@@ -19,8 +23,20 @@ const RegisterForm = () => {
     mode: "all",
   });
 
-  const onSubmit = (data: IRegister) => {
-    console.log("Registered Successfully", data);
+  const { mutate, isPending } = useMutation({
+    mutationFn: register,
+    onSuccess: (response) => {
+      console.log(response);
+      toast.success(response.message ?? "Register success");
+      navigate("/login");
+    },
+  });
+
+  // submit handler
+  const onSubmit = async (data: IRegister) => {
+    console.log(data);
+    // register(data)
+    mutate(data);
   };
 
   return (
@@ -28,75 +44,55 @@ const RegisterForm = () => {
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(onSubmit)}
-          className="flex flex-col gap-1"
+          className="flex flex-col gap-6"
         >
-          <div>
-            {/* border-white w-full flex flex-col md:flex-row gap-3 */}
-            <div className="border border-white w-full flex flex-col md:flex-row gap-5">
-              {/*First Name */}
+          {/* input components wrapper */}
+          <div className="flex flex-col gap-3">
+            <div className="w-full flex flex-col md:flex-row gap-3">
               <Input
-                id={"first_name"}
                 label={"First Name"}
+                id={"first_name"}
                 name={"first_name"}
-                placeholder={"Shop"}
-                rules={{
-                  required: "First Name is Required",
-                }}
-                required
+                placeholder={"John"}
+                required={true}
               />
-              {/*Last Name */}
+
               <Input
-                id={"last_name"}
                 label={"Last Name"}
+                id={"last_name"}
                 name={"last_name"}
-                placeholder={"Kart"}
-                rules={{
-                  required: "Last Name is Required",
-                }}
+                placeholder={"Doe"}
                 required
               />
             </div>
 
-            {/* Email */}
             <Input
-              id={"email"}
               label={"Email"}
+              id={"email"}
               name={"email"}
-              placeholder={"shopkart@gmail.com"}
-              type={"email"}
-              rules={{
-                required: "Email is Required",
-              }}
+              placeholder={"johndoe@gmail.com"}
               required
             />
 
-            {/* Password */}
             <Input
-              id={"password"}
               label={"Password"}
+              id={"password"}
               name={"password"}
-              placeholder={"********"}
               type={"password"}
-              rules={{
-                required: "Password is Required",
-                minLength: 8,
-              }}
+              placeholder={"XXXXXXXXXX"}
               required
             />
-            {/* Confirm Password */}
             <Input
-              id={"confirm_password"}
               label={"Confirm Password"}
+              id={"confirm_password"}
               name={"confirm_password"}
-              placeholder={"********"}
-              rules={{
-                required: "Need to confirm password again!",
-              }}
+              type={"password"}
+              placeholder={"Retype password"}
               required
             />
           </div>
 
-          <Button label={"Register"} type="submit" />
+          <Button isDisabled={isPending} label={"Sign Up"} type="submit" />
         </form>
       </FormProvider>
     </div>

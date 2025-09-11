@@ -32,7 +32,7 @@ const Input: FC<IProps> = ({
   const [show, setShow] = useState<boolean>(false);
 
   // console.log(name, watch(name));
-  console.log(errors);
+  // console.log(errors);
   return (
     <div className="flex flex-col gap-1 w-full">
       <div className="flex">
