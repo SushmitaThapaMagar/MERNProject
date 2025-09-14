@@ -39,9 +39,9 @@ const NavBar = () => {
   }
 
   return (
-    <nav className="w-full flex items-center justify-between tracking-wider px-36 py-2">
+    <nav className="w-full flex items-center justify-between tracking-wider px-10 py-2">
       {/* logo */}
-      <div>
+      <div className="flex items-center">
         <img
           src={"./logo.png"}
           alt="logo image"
@@ -49,17 +49,17 @@ const NavBar = () => {
         />
       </div>
       {/* nav links */}
-      <div>
+      <div className="flex items-center gap-8">
         <NavLinks />
       </div>
 
-      <div>
+      <div className="flex items-center">
         {token ? (
           <LoggedInUsersection logout={logoutUser} user={user} />
         ) : (
           <div>
             <Link
-              className="h-full bg-indigo-600 rounded-md font-bold text-white px-6 py-3"
+              className="bg-orange-600 rounded-md font-bold text-white px-5 py-2 hover:bg-orange-700 transition-colors flex items-center justify-center"
               to={"/login"}
             >
               Log In

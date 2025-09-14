@@ -14,14 +14,14 @@ const AllProductList = () => {
   const arr = Array.from({ length: 12 }, (_, i) => `product-list-${i + 1}`);
 
   return (
-    <div>
-      {data && data.data.products.length === 0 && (
-        <div className="w-full h-full flex justify-center items-center mt-10">
-          <NotFoundComponent message="Products Not Found!" />
+    <div className="mt-6 px-4 lg:px-40">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="col-span-full">
+          {data && data.data.products.length === 0 && (
+            <NotFoundComponent message="Products Not Found!" />
+          )}
         </div>
-      )}
 
-      <div className="grid grid-cols-4">
         {isLoading
           ? arr.map((val) => <ProductCardLoader key={val} />)
           : data.data.products.map((product: IProductData) => (
