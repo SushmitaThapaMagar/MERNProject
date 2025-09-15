@@ -4,7 +4,6 @@ import { NextFunction, Request, Response } from "express";
 import CustomError from "./error-handler.middleware";
 import { decodeJWTToken } from "../utils/jwt.utils";
 import User from "../models/user.model";
-import { JWTPayloadDecoded } from "../types/global.types";
 import { Role } from "../types/global.types";
 
 //middleware export function named : authenticate
@@ -25,7 +24,7 @@ export const authenticate = (roles?: Role[]) => {
       }
 
       // check validity of token
-      const decodedData = decodeJWTToken(token) as JWTPayloadDecoded;
+      const decodedData = decodeJWTToken(token);
 
       //token retrieve / getting back
       //attempts to retrieve the JWT from cookies (specifically, access_token)
