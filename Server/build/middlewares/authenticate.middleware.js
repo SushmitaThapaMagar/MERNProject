@@ -27,7 +27,7 @@ const authenticate = (roles) => {
             const token = req.cookies.access_token;
             // const token  = req.headers['authorization']
             if (!token) {
-                throw new error_handler_middleware_1.default("Unauthorized(token). Access denied", 401);
+                throw new error_handler_middleware_1.default("Unauthorized(token).Token error, Access denied", 401);
             }
             // check validity of token
             const decodedData = (0, jwt_utils_1.decodeJWTToken)(token);

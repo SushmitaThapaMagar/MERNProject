@@ -18,7 +18,10 @@ export const authenticate = (roles?: Role[]) => {
       const token = req.cookies.access_token;
       // const token  = req.headers['authorization']
       if (!token) {
-        throw new CustomError("Unauthorized(token). Access denied", 401);
+        throw new CustomError(
+          "Unauthorized(token).Token error, Access denied",
+          401
+        );
       }
 
       // check validity of token
