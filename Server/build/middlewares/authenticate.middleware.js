@@ -23,6 +23,7 @@ const authenticate = (roles) => {
     //asynchronous use async/wait -- try/catch -- handler
     return (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
         try {
+            console.log(req);
             const token = req.cookies.access_token;
             // const token  = req.headers['authorization']
             if (!token) {
