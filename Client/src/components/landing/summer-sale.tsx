@@ -12,9 +12,9 @@ const SummerSale = () => {
     queryKey: ["get_mostsales_products"],
   });
   return (
-    <div className="mt-16 px-4 lg:px-36">
+    <div className="mt-16 px-15 lg:px-36">
       <ComponentTitle
-        title="2 weeks most sale"
+        title="2 weeks summer sale"
         subTitle="2 weeks most sale products"
         key={"most_sale_component_title"}
         link="#"

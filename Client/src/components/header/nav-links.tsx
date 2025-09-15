@@ -10,11 +10,15 @@ const navLinks = [
     link: "/product",
   },
   {
-    label: "About Us",
+    label: "About",
     link: "/about_us", // Fixed typo in the link
   },
   {
-    label: "Contact Us",
+    label: "Contact",
+    link: "/contact_us", // Fixed typo in the link
+  },
+  {
+    label: "Donate",
     link: "/contact_us", // Fixed typo in the link
   },
 ];
@@ -23,7 +27,7 @@ const NavLinks = () => {
   const location = useLocation(); // Use useLocation to get current path
 
   return (
-    <div className="flex items-center gap-5">
+    <div className="flex items-center gap-10">
       {" "}
       {/* Corrected class name */}
       {navLinks.map((item) => (
@@ -33,7 +37,7 @@ const NavLinks = () => {
           <span
             className={`text-lg font-[400] ${
               location.pathname === item.link
-                ? "font-[600] text-indigo-600"
+                ? "font-[600] text-orange-600"
                 : ""
             }`}
           >

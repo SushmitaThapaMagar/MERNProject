@@ -11,7 +11,7 @@ const CategoryList = () => {
     queryKey: ["get_all_category"],
   });
   return (
-    <div className="mt-10 px-36 lg:px-36">
+    <div className="mt-10 px-15 lg:px-36">
       <ComponentTitle
         title="Browse Our Best-Selling Products"
         subTitle="Discover top-rated products by category loved by our customers."

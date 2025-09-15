@@ -14,8 +14,8 @@ const AllProductList = () => {
   const arr = Array.from({ length: 12 }, (_, i) => `product-list-${i + 1}`);
 
   return (
-    <div className="mt-6 px-4 lg:px-40">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div className="mt-6 px-20 lg:px-40">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <div className="col-span-full">
           {data && data.data.products.length === 0 && (
             <NotFoundComponent message="Products Not Found!" />

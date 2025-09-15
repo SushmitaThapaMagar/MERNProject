@@ -90,7 +90,7 @@ const ProductCard = ({ product }: IProps) => {
         <button
           disabled={isPending}
           onClick={handleClick}
-          className=" disabled:cursor-not-allowed border border-[#A31621]  w-full p-2 px-1 rounded-md text-[#A31621] text-[16px] font-[500] cursor-pointer hover:bg-[#f5d0d2] transition duration-200 "
+          className=" disabled:cursor-not-allowed border border-[#A31621]  w-full px-1  rounded-md text-[#A31621] text-[16px] font-[500] cursor-pointer hover:bg-[#f5d0d2] transition duration-200 "
         >
           {isPending ? "Adding to list.." : "Add to wishlist"}
         </button>

@@ -2,13 +2,13 @@ import heroImage from "../../assets/cart.jpg";
 
 const Hero = () => {
   return (
-    <div id={"hero-section"} className="w-full h-[80vh] relative">
+    <div id={"hero-section"} className="w-full h-[100vh] relative">
       {/* overlay */}
       <div className="bg-black/40 absolute inset-0"></div>
 
       <img src={heroImage} className="h-full w-full" />
 
-      <div className="absolute top-1/3 left-20 max-w-[600px]">
+      <div className="absolute top-1/3 left-27 max-w-[600px]">
         <div>
           <h1 className="text-5xl text-orange-400 font-extrabold">
             Your One-Stop Online Destination

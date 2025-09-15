@@ -2,7 +2,7 @@
 
 const AboutUs = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="mt-30 min-h-screen flex flex-col">
       {/* Main content */}
       <main className="flex-grow px-8 py-12 max-w-5xl mx-auto">
         <h1 className="text-4xl font-bold text-center text-indigo-800 mb-6">

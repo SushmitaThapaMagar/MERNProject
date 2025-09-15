@@ -39,17 +39,17 @@ const NavBar = () => {
   }
 
   return (
-    <nav className="w-full flex items-center justify-between tracking-wider px-10 py-2">
-      {/* logo */}
+    <nav className="fixed top-0 left-0 w-full flex items-center justify-between tracking-wider px-8 py-2 bg-white shadow-md z-10">
+      {/* logoa */}
       <div className="flex items-center">
         <img
           src={"./logo.png"}
           alt="logo image"
-          className="object-cover h-20"
+          className=" object-cover h-18"
         />
       </div>
       {/* nav links */}
-      <div className="flex items-center gap-8">
+      <div className="flex items-center">
         <NavLinks />
       </div>
 
