@@ -66,6 +66,7 @@ app.use((0, cors_1.default)({
 //extended : true is used for object is the obgi
 app.use((0, helmet_1.default)());
 app.use((0, cookie_parser_1.default)());
+app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
 //parse cooke
 app.get("/", (req, res) => {

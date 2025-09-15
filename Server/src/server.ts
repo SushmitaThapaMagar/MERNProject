@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import { connectDb } from "./config/db-connect";
+
 import authRoutes from "./routes/auth.route";
 import CustomError, {
   errorHandler,
@@ -38,6 +39,8 @@ app.use(
 //extended : true is used for object is the obgi
 app.use(helmet());
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(express.json());
 
 //parse cooke
