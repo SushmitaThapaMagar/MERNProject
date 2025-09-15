@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction, response } from "express";
+import { Request, Response, NextFunction } from "express";
 import User from "../models/user.model";
 import { compare, hash } from "../utils/bcrypt";
 import CustomError from "../middlewares/error-handler.middleware";
@@ -29,11 +29,6 @@ export const register = asyncHandler(
       password: hashedPassword,
       phone_number,
     });
-
-    // throw error
-    if (!user) {
-      throw new CustomError("Registration failed.Try again later.", 500);
-    }
 
     // throw error
     if (!user) {

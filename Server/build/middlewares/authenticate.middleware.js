@@ -34,23 +34,23 @@ const authenticate = (roles) => {
             //token retrieve / getting back
             //attempts to retrieve the JWT from cookies (specifically, access_token)
             if (!decodedData) {
-                throw new error_handler_middleware_1.default("Unauthorized(deocdedData). Access denied", 401);
+                throw new error_handler_middleware_1.default("Unauthorized(decodedData). Access denied", 401);
+            }
+            //Checks if the token has expired by comparing the expiration time (exp) to the current time.
+            if (decodedData.exp * 1000 < Date.now()) {
+                res.clearCookie("access_token", {
+                    httpOnly: true,
+                    secure: false,
+                    sameSite: "none",
+                });
+                //If expired, it clears the token cookie and throws an unauthorized error
+                throw new error_handler_middleware_1.default("Token Expired. Access denied", 401);
             }
             //Looks for a user in the database whose email matches the decoded JWT data
             const user = yield user_model_1.default.findOne({ email: decodedData.email });
             //throws an error indicating unauthorized access
             if (!user) {
                 throw new error_handler_middleware_1.default("Unauthorized(user). Access denied", 401);
-            }
-            //Checks if the token has expired by comparing the expiration time (exp) to the current time.
-            if (decodedData.exp * 1000 < Date.now()) {
-                res.clearCookie("access_token", {
-                    httpOnly: true,
-                    secure: process.env.NODE_ENV === "development" ? false : true,
-                    sameSite: "none",
-                });
-                //If expired, it clears the token cookie and throws an unauthorized error
-                throw new error_handler_middleware_1.default("Unauthorized. Access denied", 401);
             }
             //role based ??
             //If all checks pass, it calls next() to proceed to the next middleware or route handler
