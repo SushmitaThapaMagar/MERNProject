@@ -36,9 +36,9 @@ app.use(
   })
 );
 
+app.use(cookieParser());
 //extended : true is used for object is the obgi
 app.use(helmet());
-app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
