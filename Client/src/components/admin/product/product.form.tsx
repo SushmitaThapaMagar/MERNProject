@@ -67,6 +67,7 @@ const ProductForm = () => {
     <div className="mt-8 px-10 py-10  w-[800px] mx-auto border border-gray-300 rounded-md">
       <FormProvider {...methods}>
         <form
+          // @ts-expect-error // since formdata is not string
           onSubmit={methods.handleSubmit(handleSubmit)}
           className="flex flex-col gap-4"
         >

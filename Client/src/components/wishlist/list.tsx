@@ -22,7 +22,7 @@ const List = () => {
         {isLoading
           ? arr.map((data) => <ProductCardLoader key={data} />)
           : data.data.map((product: IProductData) => (
-              <WishListProductCard key={product._id} />
+              <WishListProductCard product={product} key={product._id} />
             ))}
       </div>
     </div>
